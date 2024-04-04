@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"regexp"
+	"sync"
 	"time"
 )
 
@@ -22,6 +23,7 @@ type EthereumParser struct {
 	tx_chan          chan Transaction
 	BlockPollingFreq time.Duration
 	monitorStarted   bool
+	closeOnce        sync.Once
 }
 
 func NewEthereumParser(ctx context.Context, storage Storage) Parser {
@@ -124,6 +126,8 @@ func (ep *EthereumParser) startMonitor() {
 }
 
 func (ep *EthereumParser) Stop() {
-	close(ep.tx_chan)
+	ep.closeOnce.Do(func() {
+		close(ep.tx_chan)
+	})
 	ep.monitorStarted = false
 }
