@@ -69,8 +69,9 @@ func (ep *EthereumParser) startMonitor() {
 		return
 	}
 	ep.monitorStarted = true
-	ticker := time.NewTicker(ep.BlockPollingFreq)
 
+	ticker := time.NewTicker(ep.BlockPollingFreq)
+	
 	defer ticker.Stop()
 	defer ep.Stop()
 
