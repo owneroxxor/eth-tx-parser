@@ -92,7 +92,7 @@ func (ep *EthereumParser) startMonitor() {
 				return
 			}
 
-			if ep.storage.GetLastProcessedBlockNum() == 0 {
+			if ep.storage.GetLastProcessedBlockNum() == 0 { // Only executed in the first run
 				ep.storage.SetLastProcessedBlockNum(latestBlockNum - 1)
 			}
 
