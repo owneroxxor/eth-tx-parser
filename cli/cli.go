@@ -3,11 +3,11 @@ package cli
 import (
 	"bufio"
 	"context"
+	"eth-tx-parser/eth_parser"
 	"fmt"
 	"io"
 	"os"
 	"strings"
-	"tx_parser/eth_parser"
 )
 
 type CLI struct {

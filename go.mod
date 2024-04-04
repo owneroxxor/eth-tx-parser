@@ -1,4 +1,4 @@
-module tx_parser
+module eth-tx-parser
 
 go 1.21.6
 

@@ -4,11 +4,11 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"eth-tx-parser/eth_parser"
+	"eth-tx-parser/eth_parser/test"
 	"strings"
 	"testing"
 	"time"
-	"tx_parser/eth_parser"
-	"tx_parser/eth_parser/test"
 
 	"github.com/google/go-cmp/cmp"
 )

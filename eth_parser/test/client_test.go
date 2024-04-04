@@ -2,11 +2,11 @@ package test
 
 import (
 	"encoding/json"
+	"eth-tx-parser/eth_parser"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"tx_parser/eth_parser"
 )
 
 func setupMockServer() *httptest.Server {

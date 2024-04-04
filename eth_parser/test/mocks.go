@@ -1,8 +1,8 @@
 package test
 
 import (
+	"eth-tx-parser/eth_parser"
 	"fmt"
-	"tx_parser/eth_parser"
 )
 
 type ParserMock struct {

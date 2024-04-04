@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
+	"eth-tx-parser/cli"
+	"eth-tx-parser/eth_parser"
 	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
-	"tx_parser/cli"
-	"tx_parser/eth_parser"
 )
 
 func main() {

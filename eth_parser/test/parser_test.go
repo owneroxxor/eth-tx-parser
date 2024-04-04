@@ -2,10 +2,10 @@ package test
 
 import (
 	"context"
+	"eth-tx-parser/eth_parser"
 	"reflect"
 	"testing"
 	"time"
-	"tx_parser/eth_parser"
 )
 
 func Test_EthereumParser_GetCurrentBlock(t *testing.T) {
