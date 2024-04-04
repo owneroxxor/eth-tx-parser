@@ -13,6 +13,7 @@ import (
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
+	
 	parser := eth_parser.NewEthereumParser(ctx, nil) // Passing nil so it uses the default storage
 	cli := cli.NewCLI(ctx, parser)
 
