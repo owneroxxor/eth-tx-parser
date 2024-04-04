@@ -35,7 +35,7 @@ func NewEthereumParser(ctx context.Context, storage Storage) Parser {
 		ctx:              ctx,
 		Client:           NewEthereumClient(),
 		storage:          storage,
-		tx_chan:          make(chan Transaction, 100),
+		tx_chan:          make(chan Transaction, 10),
 		BlockPollingFreq: 5 * time.Second,
 	}
 
@@ -71,7 +71,7 @@ func (ep *EthereumParser) startMonitor() {
 	ep.monitorStarted = true
 
 	ticker := time.NewTicker(ep.BlockPollingFreq)
-	
+
 	defer ticker.Stop()
 	defer ep.Stop()
 
@@ -111,7 +111,11 @@ func (ep *EthereumParser) startMonitor() {
 									log.Println("failed to store transaction, bad storage. exiting now")
 									return
 								}
-								ep.tx_chan <- tx
+								// Send to the live feed
+								select {
+								case ep.tx_chan <- tx:
+								default: // Skip if the channel is full
+								}
 								break
 							}
 						}
