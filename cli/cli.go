@@ -7,17 +7,17 @@ import (
 	"io"
 	"os"
 	"strings"
-	parser "tx_parser/eth_parser"
+	"tx_parser/eth_parser"
 )
 
 type CLI struct {
 	ctx     context.Context
-	parser  parser.Parser
+	parser  eth_parser.Parser
 	scanner *bufio.Scanner
 	output  io.Writer // Adds flexibility to read the CLI output for testing purpouses
 }
 
-func NewCLI(ctx context.Context, p parser.Parser) *CLI {
+func NewCLI(ctx context.Context, p eth_parser.Parser) *CLI {
 	return &CLI{
 		ctx:     ctx,
 		parser:  p,
@@ -137,7 +137,7 @@ func (cli *CLI) HandleLive(args []string) {
 	fmt.Fprintln(cli.output, "Stopped live transaction monitoring.")
 }
 
-func (cli *CLI) printTx(tx parser.Transaction) {
+func (cli *CLI) printTx(tx eth_parser.Transaction) {
 	fmt.Fprintf(cli.output, "=> Transaction for address [%s]:\n", tx.Subscriber)
 	fmt.Fprintf(cli.output, "   Hash: %s\n", tx.Hash)
 	fmt.Fprintf(cli.output, "   From: %s\n", tx.From)
