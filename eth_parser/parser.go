@@ -107,7 +107,7 @@ func (ep *EthereumParser) startMonitor() {
 						for _, addr := range []string{tx.From, tx.To} {
 							if ep.storage.IsSubscribed(addr) {
 								tx.Subscriber = addr
-								if success := ep.storage.AddTransaction(tx.Subscriber, tx); !success {
+								if ok := ep.storage.AddTransaction(tx.Subscriber, tx); !ok {
 									log.Println("failed to store transaction, bad storage. exiting now")
 									return
 								}
