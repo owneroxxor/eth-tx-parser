@@ -24,6 +24,7 @@ type EthereumParser struct {
 	BlockPollingFreq time.Duration
 	monitorStarted   bool
 	closeOnce        sync.Once
+	stopChan         chan struct{}
 }
 
 func NewEthereumParser(ctx context.Context, storage Storage) Parser {
@@ -37,6 +38,7 @@ func NewEthereumParser(ctx context.Context, storage Storage) Parser {
 		storage:          storage,
 		tx_chan:          make(chan Transaction, 10),
 		BlockPollingFreq: 5 * time.Second,
+		stopChan:         make(chan struct{}),
 	}
 
 	go ep.startMonitor()
@@ -79,7 +81,8 @@ func (ep *EthereumParser) startMonitor() {
 		select {
 		case <-ep.ctx.Done():
 			return
-
+		case <-ep.stopChan:
+			return
 		case <-ticker.C:
 			latestBlockNumInstance, err := ep.Client.FetchLatestBlockNumber()
 			if err != nil {
@@ -132,7 +135,8 @@ func (ep *EthereumParser) startMonitor() {
 
 func (ep *EthereumParser) Stop() {
 	ep.closeOnce.Do(func() {
+		close(ep.stopChan)
 		close(ep.tx_chan)
+		ep.monitorStarted = false
 	})
-	ep.monitorStarted = false
 }
