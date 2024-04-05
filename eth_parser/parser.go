@@ -36,7 +36,7 @@ func NewEthereumParser(ctx context.Context, storage Storage) Parser {
 		ctx:              ctx,
 		Client:           NewEthereumClient(),
 		storage:          storage,
-		tx_chan:          make(chan Transaction, 10),
+		tx_chan:          make(chan Transaction),
 		BlockPollingFreq: 5 * time.Second,
 		stopChan:         make(chan struct{}),
 	}
